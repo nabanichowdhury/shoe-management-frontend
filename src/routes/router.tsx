@@ -1,13 +1,14 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import App from "../App";
 
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
-import ProductDetails from "../pages/ProductDetails";
+import ProductDetails from "../pages/AllProducts";
 import MyProducts from "../pages/MyProducts";
 import MyBuyers from "../pages/MyBuyers";
 import DashBoardlayout from "../layout/DashBoardlayout";
-import Home from "../pages/Home";
+import PrivateRoute from "./PrivateRoute";
+import AllProducts from "../pages/AllProducts";
 
 export const routes = createBrowserRouter([
   {
@@ -16,11 +17,12 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashBoardlayout></DashBoardlayout>,
+    element:<PrivateRoute><DashBoardlayout></DashBoardlayout></PrivateRoute> ,
     children: [
+      
       {
         path: '/dashboard/products',  // Combine parent and child route paths
-        element: <ProductDetails></ProductDetails>
+        element: <AllProducts></AllProducts>
       },
       {
         path: '/dashboard/myProducts',  // Combine parent and child route paths

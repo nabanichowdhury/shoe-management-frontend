@@ -1,8 +1,49 @@
 import Navbar from "../layout/Navbar";
 import shoe1 from "../assets/shoe.png"
+import { Link, useNavigate } from "react-router-dom";
+import { useCreateUserMutation } from "../redux/features/users/userApi";
+import { ChangeEvent, useState } from "react";
+import { useAppDispatch } from "../redux/hooks";
+import { userAdd } from "../redux/features/users/userSlice";
 
 
 const SignUp = () => {
+    const [createUser,{isLoading,isError,isSuccess}]=useCreateUserMutation()
+    const navigate=useNavigate()
+    const dispatch=useAppDispatch();
+    const [name,setName]=useState('');
+    const [email,setEmail]=useState('');
+    const [password,setPassword]=useState('');
+    const handleSubmit=(event:React.FormEvent<HTMLFormElement>)=>{
+      event.preventDefault();
+      const data={
+        name:name,
+        email:email,
+        password:password
+      }
+      
+      createUser(data).unwrap().then((result)=>{
+        console.log(result);
+        
+        dispatch(userAdd(data));
+       navigate(`/dashboard`)
+
+      })
+      
+      
+    }
+    if(isError)return <p>Error created</p>
+    const handleNameChange = (event:ChangeEvent<HTMLInputElement>) => {
+      setName(event.target.value);
+    };
+  
+    const handleEmailChange = (event:ChangeEvent<HTMLInputElement>) => {
+      setEmail(event.target.value);
+    };
+  
+    const handlePasswordChange = (event:ChangeEvent<HTMLInputElement>) => {
+      setPassword(event.target.value);
+    };
     return (
         <div>
             <Navbar></Navbar>
@@ -13,26 +54,29 @@ const SignUp = () => {
       <img src={shoe1} className="max-w-xl rounded-lg " />
     </div>
     <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-      <form className="card-body">
+      <form onSubmit={handleSubmit} className="card-body">
         <div className="form-control">
           <label className="label">
             <span className="label-text">Name</span>
           </label>
-          <input type="name" placeholder="name" className="input input-bordered" required />
+          <input onChange={handleNameChange} value={name} type="name" placeholder="name" className="input input-bordered" required />
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Email</span>
           </label>
-          <input type="email" placeholder="email" className="input input-bordered" required />
+          <input onChange={handleEmailChange} value={email} type="email" placeholder="email" className="input input-bordered" required />
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Password</span>
           </label>
-          <input type="password" placeholder="password" className="input input-bordered" required />
+          <input onChange={handlePasswordChange} value={password} type="password" placeholder="password" className="input input-bordered" required />
           <label className="label">
             <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+            <span className="label-text-alt">Already Have an Account? <Link to='/login' className="font-bold">Login</Link></span>
+
+            
           </label>
         </div>
         <div className="form-control mt-6">

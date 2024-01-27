@@ -31,7 +31,7 @@ const Login = () => {
         }
        loginUser(data).unwrap().then((result:any)=>{
         console.log(result.user)
-        localStorage.setItem('token',JSON.stringify(result.token)) 
+        localStorage.setItem('token',result.token) 
         if (result.user.email) {
             console.log('Redirecting to dashboard');
             

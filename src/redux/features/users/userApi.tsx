@@ -14,14 +14,24 @@ const userApi=api.injectEndpoints({
         }),
         loginUser: builder.mutation({
             query: (credentials) => ({
-              url: '/user/login', // Assuming user login endpoint is /users
+              url: '/user/login', 
               method: 'POST',
               body: credentials,
             }),
           }),
           getSingleUser:builder.query({
-            query:(id)=>({url:`/user/${id}`})
-          })
+            query:(id)=>({
+                url:`product/user/${id}`,
+                method:'GET',
+                headers:{
+                    'content-type': 'application/json', 
+                    authorization: `bearer ${localStorage.getItem('token')}`
+                },
+                providesTags: ['comments'],
+
+            }),
+          }),
+          
           
         
         

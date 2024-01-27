@@ -9,6 +9,9 @@ import MyBuyers from "../pages/MyBuyers";
 import DashBoardlayout from "../layout/DashBoardlayout";
 import PrivateRoute from "./PrivateRoute";
 import AllProducts from "../pages/AllProducts";
+import AddProductForm from "../pages/AddProductForm";
+import MySoldProducts from "../pages/MySoldProducts";
+import UpdateProduct from "../pages/UpdateProduct";
 
 export const routes = createBrowserRouter([
   {
@@ -30,11 +33,19 @@ export const routes = createBrowserRouter([
       },
       {
         path: '/dashboard/mySoldProducts',  // Combine parent and child route paths
-        element: <MyProducts></MyProducts>
+        element: <MySoldProducts></MySoldProducts>
       },
       {
         path: '/dashboard/myBuyers',  // Combine parent and child route paths
         element: <MyBuyers></MyBuyers>
+      },
+      {
+        path: '/dashboard/addProduct',  // Combine parent and child route paths
+        element: <AddProductForm></AddProductForm>
+      },
+      {
+        path: '/dashboard/updateProduct',  // Combine parent and child route paths
+        element: <UpdateProduct></UpdateProduct>
       },
     ]
   },

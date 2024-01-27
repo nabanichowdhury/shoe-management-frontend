@@ -17,6 +17,7 @@ const SignUp = () => {
     const handleSubmit=(event:React.FormEvent<HTMLFormElement>)=>{
       event.preventDefault();
       const data={
+        _id:"",
         name:name,
         email:email,
         password:password
@@ -24,6 +25,9 @@ const SignUp = () => {
       
       createUser(data).unwrap().then((result)=>{
         console.log(result);
+        data._id=result.result.insertedId
+        ;
+
         
         dispatch(userAdd(data));
        navigate(`/dashboard`)

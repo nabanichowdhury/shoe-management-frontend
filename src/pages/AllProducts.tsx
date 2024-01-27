@@ -3,12 +3,16 @@ import shoe1 from "../assets/shoe1.webp"
 
 
 const AllProducts = () => {
-    const token = localStorage.getItem('token');
-    const {data,isLoading}=useGetAllProductsQuery(token)
+    
+    const {data,isLoading}=useGetAllProductsQuery(undefined,{
+        refetchOnMountOrArgChange: true,
+        pollingInterval: 30000,
+      })
     if(isLoading)return <p>Loading...</p>
-    console.log(data)
+    
     return (
         <div className="overflow-x-auto">
+            <div className="font-bold">All Products</div>
   <table className="table">
     {/* head */}
     <thead>
@@ -26,7 +30,7 @@ const AllProducts = () => {
       {
         data.map((shoe:any)=><tr>
         
-            <td>
+            <td key={shoe._id}>
               <div className="flex items-center gap-3">
                 <div className="avatar">
                   <div className="mask mask-squircle w-12 h-12">
@@ -45,7 +49,8 @@ const AllProducts = () => {
               <span className="badge badge-ghost badge-sm">{shoe.color}</span>
             </td>
             <td>{shoe.sellingDetails.sold ?<span className="badge badge-warning badge-sm">Out of stock</span>:<span className="badge badge-success badge-sm">Available</span>}</td>
-            <td>{shoe.color}</td>
+            
+            <td>{shoe.sellerInfo.sellerName}</td>
             <th>
               <button className="btn btn-ghost btn-xs">Show Product</button>
             </th>

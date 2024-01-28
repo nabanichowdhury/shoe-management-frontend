@@ -3,7 +3,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { startOfWeek, endOfWeek, isWithinInterval, parse } from 'date-fns';
 
-
 interface ISales {
     _id: string;
     sellerId: string;
@@ -51,13 +50,22 @@ const salesSlice = createSlice({
         );
         console.log(state.filteredSales)
       },
-      filterByWeek: (state, action) => {
-        const { year, month, week } = action.payload;
-        console.log("Filtering by week:", { year, month, week });
-  
-        const referenceDate = parse(`${year}-${month}-22`, 'yyyy-MM-dd', new Date());
-        const startDate = startOfWeek(referenceDate, { weekStartsOn: 1 });
-        const endDate = endOfWeek(referenceDate, { weekStartsOn: 1 });
+      filterByWeek: (state) => {
+       
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); 
+        const day = String(today.getDate()).padStart(2, '0');
+      
+        const formattedDateString = `${year}-${month}-${day}`;
+      
+        const reference=new Date(formattedDateString);
+
+        const startDate = startOfWeek(reference, { weekStartsOn: 1 });
+        const endDate = endOfWeek(reference, { weekStartsOn: 1 });
+        console.log(startDate)
+        console.log(endDate)
   
         state.filteredSales = state.sales.filter((sale) => {
           const saleDate = parse(sale.dateOfSale, 'dd/MM/yyyy', new Date());
@@ -66,6 +74,7 @@ const salesSlice = createSlice({
   
           return isWithin;
         });
+        console.log(state.filteredSales)
     },
     filterByDate: (state, action) => {
         const { date } = action.payload;

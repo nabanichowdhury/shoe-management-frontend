@@ -32,7 +32,9 @@ const AddProductForm = () => {
       });
       const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setShoe((prevShoe) => ({ ...prevShoe, [name]: value }));
+        const parsedValue = parseFloat(value);
+    const newValue = isNaN(parsedValue) ? value : Math.max(0, parsedValue);
+        setShoe((prevShoe) => ({ ...prevShoe, [name]: newValue }));
       };
     
       const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

@@ -27,15 +27,7 @@ const SalesReport = () => {
             const currentDate = new Date();
             const currentYear = currentDate.getFullYear();
             const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-            // Function to get the ISO week number
-            function getISOWeekNumber(date: Date): number {
-                const dayOfWeek = date.getDay() || 7;
-                date.setDate(date.getDate() + (4 - dayOfWeek));
-                const yearStart = new Date(date.getFullYear(), 0, 1);
-                return Math.ceil(((date.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
-              }
-
-            const currentWeek = getISOWeekNumber(currentDate).toString();
+            
 
             switch (selectedOption) {
                 case "Yearly":
@@ -45,7 +37,7 @@ const SalesReport = () => {
                     dispatch(filterByMonth({ year: currentYear, month: currentMonth }));
                     break;
                 case "Weekly":
-                    dispatch(filterByWeek({ year: currentYear, month: currentMonth, week: currentWeek }));
+                    dispatch(filterByWeek());
                     break;
                 default:
                     break;
@@ -64,9 +56,7 @@ const SalesReport = () => {
 
     }, [selectedOption]);
 
-    console.log(filteredSales)
-
-
+   
     if (isLoading) return <p>Loading...</p>;
 
     const totalEarned = filteredSales.reduce((total: number, sale: any) => total + sale.saleAmount, 0);
@@ -85,7 +75,7 @@ const SalesReport = () => {
             </select>
             <div>
                 <div>
-                    <h1 className="font-bold mx-3">My Buyers</h1>
+                    <h1 className="font-bold mx-3">Sales</h1>
                     <div className="overflow-x-auto">
                         <table className="table table-xs">
                             <thead>

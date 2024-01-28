@@ -22,13 +22,13 @@ const AllProducts = () => {
         <th>Product Details</th>
         <th>Availability</th>
         <th>Seller name</th>
-        <th></th>
+        {/* <th></th> */}
       </tr>
     </thead>
     <tbody>
       {/* row 1 */}
       {
-        data.map((shoe:any)=><tr>
+        data?.map((shoe:any)=><tr>
         
             <td key={shoe._id}>
               <div className="flex items-center gap-3">
@@ -51,9 +51,9 @@ const AllProducts = () => {
             <td>{shoe.productQuantity==0 ?<span className="badge badge-warning badge-sm">Out of stock</span>:<span className="badge badge-success badge-sm">Available</span>}</td>
             
             <td>{shoe.sellerInfo.sellerName}</td>
-            <th>
+            {/* <th>
               <button className="btn btn-ghost btn-xs">Show Product</button>
-            </th>
+            </th> */}
           </tr>)
       }
       

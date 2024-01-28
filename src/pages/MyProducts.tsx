@@ -34,7 +34,7 @@ const MyProducts = () => {
 
     const handleSelectAll = (e: any) => {
         setIsCheckAll(!isCheckAll);
-        setIsCheck(list.map(li => li._id));
+        setIsCheck(list?.map(li => li._id));
         if (isCheckAll) {
             setIsCheck([]);
         }
@@ -83,10 +83,12 @@ const MyProducts = () => {
                                 name="selectAll"
                                 id="selectAll"
                                 handleClick={handleSelectAll}
-                                isChecked={list.length == isCheck.length}
+                                isChecked={list?.length == isCheck?.length}
                             />
 
                         </th>
+
+
 
                         <th>Name</th>
                         <th>Product Details</th>
@@ -98,7 +100,7 @@ const MyProducts = () => {
                 <tbody>
 
                     {
-                        data.map((shoe: any) => <tr key={shoe._id}>
+                        list?.map((shoe: any) => <tr key={shoe._id}>
                             <th>
                                 <CheckBox
                                     key={shoe._id}

@@ -34,7 +34,7 @@ const Login = () => {
         localStorage.setItem('token',result.token) 
         if (result.user.email) {
             console.log('Redirecting to dashboard');
-            
+            localStorage.setItem('userInfo',JSON.stringify(result.user)) 
             dispatch(userAdd(result.user));
             navigate(`/dashboard`)
           }

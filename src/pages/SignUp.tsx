@@ -17,7 +17,7 @@ const SignUp = () => {
     const handleSubmit=(event:React.FormEvent<HTMLFormElement>)=>{
       event.preventDefault();
       const data={
-        _id:"",
+        
         name:name,
         email:email,
         password:password
@@ -25,11 +25,15 @@ const SignUp = () => {
       
       createUser(data).unwrap().then((result)=>{
         console.log(result);
-        data._id=result.result.insertedId
-        ;
+        const u={
+          _id:result.insertedId ,
+          name:data.name,
+          email:data.email,
+          password:data.password,
+        }
 
-        
-        dispatch(userAdd(data));
+        localStorage.setItem('userInfo',JSON.stringify(u)) 
+        dispatch(userAdd(u));
        navigate(`/dashboard`)
 
       })

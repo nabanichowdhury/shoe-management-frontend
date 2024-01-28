@@ -61,13 +61,13 @@ const AddProductForm = () => {
             releaseDate: '',
             model: '',
             sellerInfo: {
-              sellerName: '',
-              sellerId: '',
-            },
-            sellingDetails: {
-              sold: false,
-              buyerId: null,
-            },
+                sellerName: name,
+                sellerId: _id
+              },
+              sellingDetails: {
+                sold: false,
+                buyerId: null
+              }
           });  
       };
     return (

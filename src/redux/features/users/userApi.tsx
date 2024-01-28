@@ -27,7 +27,19 @@ const userApi=api.injectEndpoints({
                     'content-type': 'application/json', 
                     authorization: `bearer ${localStorage.getItem('token')}`
                 },
-                providesTags: ['comments'],
+                providesTags: ['products'],
+
+            }),
+          }),
+          getUserById:builder.query({
+            query:(id)=>({
+                url:`user/${id}`,
+                method:'GET',
+                headers:{
+                    'content-type': 'application/json', 
+                    authorization: `bearer ${localStorage.getItem('token')}`
+                },
+                providesTags: ['products'],
 
             }),
           }),
@@ -38,5 +50,5 @@ const userApi=api.injectEndpoints({
     })
 
 })
-export const {useCreateUserMutation,useLoginUserMutation,useGetSingleUserQuery}=userApi
+export const {useCreateUserMutation,useLoginUserMutation,useGetSingleUserQuery,useGetUserByIdQuery}=userApi
 

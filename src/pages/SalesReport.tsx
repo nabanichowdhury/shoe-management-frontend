@@ -3,7 +3,8 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 
 import { filterByMonth, filterByWeek, filterByYear, setSales } from '../redux/features/sales/salesSlice';
 import { useGetBuyerOfSellerQuery } from '../redux/features/sales/salesApi';
-import SalesReportByDay from './salesReportByDay';
+import SalesReportByDay from './SalesReportByDay';
+
 
 const SalesReport = () => {
 
@@ -27,12 +28,12 @@ const SalesReport = () => {
             const currentYear = currentDate.getFullYear();
             const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');
             // Function to get the ISO week number
-            function getISOWeekNumber(date) {
+            function getISOWeekNumber(date: Date): number {
                 const dayOfWeek = date.getDay() || 7;
                 date.setDate(date.getDate() + (4 - dayOfWeek));
                 const yearStart = new Date(date.getFullYear(), 0, 1);
-                return Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
-            }
+                return Math.ceil(((date.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+              }
 
             const currentWeek = getISOWeekNumber(currentDate).toString();
 
@@ -76,7 +77,7 @@ const SalesReport = () => {
             <h1 className='font-bold'>My sales reports</h1>
             <select value={selectedOption} onChange={handleSelectChange} className="select select-ghost w-full max-w-xs">
                 <option value="" disabled>Monthly,Yearly,Weekly Report</option>
-                {options.map((o, index) => (
+                {options.map((o) => (
                     <option key={o} value={o} >
                         {o}
                     </option>

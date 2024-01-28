@@ -1,4 +1,4 @@
-// YourComponent.js
+
 
 import { useEffect, useState } from "react";
 import { useGetAllProductsQuery } from "../redux/features/products/productApi";
@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const FilterProduct = () => {
   const dispatch = useAppDispatch();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<any[]>([]);
   const { filters } = useAppSelector((state) => state.product);
   const { data, isLoading } = useGetAllProductsQuery(undefined);
 
@@ -22,13 +22,13 @@ const FilterProduct = () => {
     }
   }, [data, isLoading]);
 
-  const handleQuantityChange = (event) =>
+  const handleQuantityChange = (event: { target: { value: string; }; }) =>
     dispatch(setQuantityFilter(parseInt(event.target.value, 10)));
-  const handlePriceChange = (event) =>
+  const handlePriceChange = (event: { target: { value: string; }; }) =>
     dispatch(setPriceFilter(parseInt(event.target.value, 10)));
-  const handleColorChange = (event) =>
+  const handleColorChange = (event: { target: { value: any; }; }) =>
     dispatch(setColorFilter(event.target.value));
-  const handleBrandChange = (event) =>
+  const handleBrandChange = (event: { target: { value: any; }; }) =>
     dispatch(setBrandFilter(event.target.value));
 
   const uniqueColors = Array.from(
@@ -61,17 +61,22 @@ const FilterProduct = () => {
         step="1"
         onChange={handleQuantityChange}
       />
+      
+      <label className="mx-4" >{filters.quantity}</label>
+      <br></br>
 
-      {/* Price slider */}
+      
       <label htmlFor="price-slider">Price:</label>
       <input
         id="price-slider"
         type="range"
         min="0"
-        max="1000"
+        max="10000"
         step="1"
         onChange={handlePriceChange}
       />
+      <label className="mx-4" >{filters.price}</label>
+      <br></br>
 
       {/* Color select field */}
       <label htmlFor="color-select">Color:</label>
@@ -83,7 +88,7 @@ const FilterProduct = () => {
         <option value="" disabled>
           Color choose
         </option>
-        {uc.map((o, index) => (
+        {uc.map((o) => (
           <option key={o} value={o}>
             {o}
           </option>

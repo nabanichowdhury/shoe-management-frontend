@@ -1,17 +1,17 @@
 import { useState } from "react";
 import shoe1 from "../assets/shoe.png"
 import IShoe from "../types/globalTypes";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {  useAppSelector } from "../redux/hooks";
 import { usePostProductMutation } from "../redux/features/products/productApi";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const AddProductForm = () => {
-    const {_id,name,email}=useAppSelector(state=>state.user)
+    const {_id,name}=useAppSelector(state=>state.user)
     const currentDate = new Date();
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
     const dateString = currentDate.toLocaleDateString(undefined, options);
-    const[postProduct,other]=usePostProductMutation()
-    const dispatch=useAppDispatch()
+    const[postProduct]=usePostProductMutation()
+    
     const [shoe, setShoe] = useState<IShoe>({
         name: '',
         productQuantity: 0,

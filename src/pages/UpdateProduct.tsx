@@ -1,15 +1,15 @@
 import { useState } from "react";
 import shoe1 from "../assets/shoe.png"
 import IShoe from "../types/globalTypes";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {  useAppSelector } from "../redux/hooks";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useUpdateProductMutation } from "../redux/features/products/productApi";
 import { useNavigate } from "react-router-dom";
 
 const UpdateProduct = () => {
-    const {_id,name,email}=useAppSelector(state=>state.user) 
-    const [updateProduct,others]=useUpdateProductMutation()
+    const {_id,name}=useAppSelector(state=>state.user) 
+    const [updateProduct]=useUpdateProductMutation()
     const shoeDetail=useAppSelector(state=>state.shoe)
     const navigate=useNavigate()
     const [shoe, setShoe] = useState<IShoe>({

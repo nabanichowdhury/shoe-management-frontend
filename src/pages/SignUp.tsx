@@ -8,7 +8,7 @@ import { userAdd } from "../redux/features/users/userSlice";
 
 
 const SignUp = () => {
-    const [createUser,{isLoading,isError,isSuccess}]=useCreateUserMutation()
+    const [createUser,{isError}]=useCreateUserMutation()
     const navigate=useNavigate()
     const dispatch=useAppDispatch();
     const [name,setName]=useState('');
@@ -25,18 +25,14 @@ const SignUp = () => {
       
       createUser(data).unwrap().then((result)=>{
         console.log(result);
-        const u={
-          _id:result.insertedId ,
-          name:data.name,
-          email:data.email,
-          password:data.password,
-        }
-
-        localStorage.setItem('userInfo',JSON.stringify(u)) 
-        dispatch(userAdd(u));
-       navigate(`/dashboard`)
+        
+        dispatch(userAdd(result.user))
+        
+        localStorage.setItem('token',result.token)
+       navigate(`/dashboard/products`)
 
       })
+
       
       
     }

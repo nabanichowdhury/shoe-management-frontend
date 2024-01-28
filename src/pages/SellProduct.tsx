@@ -10,10 +10,10 @@ const SellProduct = () => {
     const userDetails=useAppSelector(state=>state.user)
     const navigate=useNavigate()
     const [count,setCount]=useState(shoeDetails.productQuantity)
-
+    
     const [buyerName,setBuyerName]=useState('');
-    const [postSale,others]=usePostSaleMutation()
-    const [updateProduct,otherupdate]=useUpdateProductMutation()
+    const [postSale]=usePostSaleMutation()
+    const [updateProduct]=useUpdateProductMutation()
     
     const handleAdd=()=>{
         setCount(count+1)

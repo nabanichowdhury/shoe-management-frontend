@@ -5,11 +5,11 @@ import { useAppDispatch } from "../redux/hooks";
 import { ChangeEvent, useState } from "react";
 import { useLoginUserMutation } from "../redux/features/users/userApi";
 import { userAdd } from "../redux/features/users/userSlice";
-import { useDispatch } from "react-redux";
+
 
 
 const Login = () => {
-    const [loginUser,{isLoading,isError,isSuccess}]=useLoginUserMutation()
+    const [loginUser,{isError}]=useLoginUserMutation()
     const navigate=useNavigate()
     const dispatch=useAppDispatch()
     const [password,setPassword]=useState('');
@@ -19,7 +19,7 @@ const Login = () => {
       };
     
       let error="";
-      let user;
+      
       const handlePasswordChange = (event:ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
       };
@@ -36,11 +36,11 @@ const Login = () => {
             console.log('Redirecting to dashboard');
             localStorage.setItem('userInfo',JSON.stringify(result.user)) 
             dispatch(userAdd(result.user));
-            navigate(`/dashboard`)
+            navigate(`/dashboard/products`)
           }
 
        }).catch((error: any) => {
-        // Handle any errors that might occur during the login process
+        
         console.error('Login failed:', error);
       });
       }

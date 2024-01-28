@@ -45,15 +45,13 @@ const shoeSlice = createSlice({
   initialState,
   reducers: {
     shoeAdd: (state, action: PayloadAction<IShoe>) => {
-      // Use Immer to modify the state in place
       return { ...state, ...action.payload };
     },
     shoeUpdate: (state, action: PayloadAction<Partial<IShoe>>) => {
-      // Use Immer to modify the state in place
       return { ...state, ...action.payload };
     },
-    shoeDelete: (state) => {
-      // Reset to initial state when deleting a shoe
+    shoeDelete: () => {
+     
       return initialState;
     },
   },

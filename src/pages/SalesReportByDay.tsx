@@ -9,18 +9,15 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 const SalesReportByDay = () => {
     const [startDate, setStartDate] = useState(new Date())
     const [endDate, setEndDate] = useState(new Date())
-    const [filter, setFilterdData] = useState()
+    const [filter, setFilterdData] = useState<any[]>()
     const { _id } = useAppSelector(state => state.user)
     const { data, isLoading } = useGetBuyerOfSellerQuery(_id);
     const handleSelect = (date) => {
-        let filtered = data?.filter(product => {
+        let filtered = data?.filter((product) => {
             let dateString = product["dateOfSale"]
             
-
-            // Split the date string into day, month, and year components
             const [day, month, year] = dateString.split('/');
 
-            // Create a new Date object (months are 0-indexed, so subtract 1 from the month)
             const prodDate = new Date(`${year}-${month}-${day}`);
             
             return (
@@ -33,13 +30,7 @@ const SalesReportByDay = () => {
         setFilterdData(filtered)
     }
     if (isLoading) return <p>Loading..</p>
-    // else{
-    //     setFilterdData(data);
-    // }
-
-    // if(!isLoading){
-    //     setFilterdData(data);
-    // }
+ 
     const selectionRange = {
         startDate: startDate,
         endDate: endDate,
@@ -54,7 +45,7 @@ const SalesReportByDay = () => {
 
 
     }, [data]);
-    // const totalEarned = filter.reduce((total: number, sale: any) => total + sale.saleAmount, 0);
+
 
 
     return (

@@ -16,13 +16,14 @@ const MyProducts = () => {
     const [list, setList] = useState<any[]>([]);
     const dispatch=useAppDispatch()
     
-    const { _id } = useAppSelector(state => state.user)
-    const id = _id;
+    const user = useAppSelector(state => state.user)
+    const id = user._id;
+    console.log(user)
     const { data, isLoading } = useGetSingleUserQuery(id,{
         refetchOnMountOrArgChange: true,
         pollingInterval: 30000,
       });
-    const [deleteProducts,others]=useDeleteProductsMutation();
+    const [deleteProducts]=useDeleteProductsMutation();
 
 
 
@@ -32,7 +33,7 @@ const MyProducts = () => {
         }
     }, [data, isLoading]);
 
-    const handleSelectAll = (e: any) => {
+    const handleSelectAll = () => {
         setIsCheckAll(!isCheckAll);
         setIsCheck(list?.map(li => li._id));
         if (isCheckAll) {

@@ -9,16 +9,17 @@ import { userAdd } from "../redux/features/users/userSlice";
 
 
 const Login = () => {
-    const [loginUser,{isError}]=useLoginUserMutation()
+    const [loginUser]=useLoginUserMutation()
     const navigate=useNavigate()
     const dispatch=useAppDispatch()
+    const [error,setError]=useState('')
     const [password,setPassword]=useState('');
     const [email,setEmail]=useState('');
     const handleEmailChange = (event:ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
       };
     
-      let error="";
+     
       
       const handlePasswordChange = (event:ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
@@ -41,7 +42,7 @@ const Login = () => {
 
        }).catch((error: any) => {
         
-        console.error('Login failed:', error);
+        setError(error)
       });
       }
     return (
@@ -70,7 +71,10 @@ const Login = () => {
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                     <span className="label-text-alt">Donot have a Account? <Link to='/signUp' className="font-bold">Signup</Link></span>
                                 </label>
-                                {isError && <span className="text-red-800">{error}</span>}
+                                <label>
+                                <span className="text-red-800">{error}</span>
+                                </label>
+                                 
                             </div>
                             <div className="form-control mt-6">
                                 <button className="btn btn-primary">Login</button>

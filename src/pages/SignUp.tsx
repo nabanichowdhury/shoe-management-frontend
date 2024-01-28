@@ -8,9 +8,10 @@ import { userAdd } from "../redux/features/users/userSlice";
 
 
 const SignUp = () => {
-    const [createUser,{isError}]=useCreateUserMutation()
+    const [createUser]=useCreateUserMutation()
     const navigate=useNavigate()
     const dispatch=useAppDispatch();
+    const [error,setError]=useState('')
     const [name,setName]=useState('');
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
@@ -23,20 +24,24 @@ const SignUp = () => {
         password:password
       }
       
-      createUser(data).unwrap().then((result)=>{
+      createUser(data)
+      .unwrap()
+      .then((result) => {
         console.log(result);
-        
-        dispatch(userAdd(result.user))
-        
-        localStorage.setItem('token',result.token)
-       navigate(`/dashboard/products`)
-
+    
+        dispatch(userAdd(result.user));
+        localStorage.setItem('token', result.token);
+        navigate(`/dashboard/products`);
       })
+      .catch((error) => {
+        setError(error.data.error);
+    
+      });
 
       
       
     }
-    if(isError)return <p>Error created</p>
+    
     const handleNameChange = (event:ChangeEvent<HTMLInputElement>) => {
       setName(event.target.value);
     };
@@ -82,9 +87,15 @@ const SignUp = () => {
 
             
           </label>
+          <label className="label text-red-800">
+            {error}
+            <span className="label-text-alt"></span>
+
+            
+          </label>
         </div>
         <div className="form-control mt-6">
-          <button className="btn btn-primary">Login</button>
+          <button className="btn btn-primary">Submit</button>
         </div>
       </form>
     </div>

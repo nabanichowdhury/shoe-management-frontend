@@ -10,7 +10,7 @@ const AddProductForm = () => {
     const currentDate = new Date();
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
     const dateString = currentDate.toLocaleDateString(undefined, options);
-    const[postProduct,{isLoading,isError,isSuccess}]=usePostProductMutation()
+    const[postProduct,other]=usePostProductMutation()
     const dispatch=useAppDispatch()
     const [shoe, setShoe] = useState<IShoe>({
         name: '',
@@ -37,41 +37,19 @@ const AddProductForm = () => {
     
       const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(shoe)
-        postProduct(shoe);
         
-        if(isLoading){
-            toast.success('Product is being posted', {
-                position: 'bottom-right',
-                autoClose: 3000, // Set the duration for the toast to be visible
-                hideProgressBar: false,
-              closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-              });
-            
-        }
-        if(isSuccess){
-            toast.success('Product posted successfully', {
-                position: 'bottom-right',
-                autoClose: 3000, // Set the duration for the toast to be visible
-                hideProgressBar: false,
-              closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-              });
+        postProduct(shoe).unwrap().then((result)=>{
+            if(result.status=="success"){
+                toast.success(result.message);
 
-        }
-        if(isError){
-            toast.error('Error posting product', {
-                position: 'bottom-right',
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-              });
-        }
+            }
+            
+
+        })
+        
+        
+        
+       
         
           setShoe({
             name: '',

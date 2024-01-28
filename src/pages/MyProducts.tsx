@@ -49,10 +49,11 @@ const MyProducts = () => {
         }
     };
     const handleDelete = () => {
-        deleteProducts(isCheck);
-        if(!others.isLoading && others.isSuccess){
-            toast.success('deleted Successfully')
-        }
+        deleteProducts(isCheck).unwrap().then((res)=>{
+            
+                toast.success(res.message);
+            
+        })
         
 
     }
@@ -68,20 +69,9 @@ const MyProducts = () => {
                     <label htmlFor="my_modal_1" className="btn bg-red-800 text-white btn-xs">Delete Selected One</label>}
 
 
-            <ToastContainer/>
+            
             </div>
-            <input type="checkbox" id="my_modal_1" className="modal-toggle" />
-            <div className="modal" role="dialog">
-                <div className="modal-box">
-                    <h3 className="font-bold text-lg">Delete products</h3>
-                    <p className="py-4">Are you sure to delete the Items?</p>
-                    <div className="modal-action flex">
-                        
-                        <label htmlFor="my_modal_1" onClick={handleDelete} className="btn  bg-red-800 text-white">Yes I want to delete</label>
-                        <label htmlFor="my_modal_1" className="btn">No I don't</label>
-                    </div>
-                </div>
-            </div>
+            
 
             <table className="table">
 
@@ -138,13 +128,13 @@ const MyProducts = () => {
                                 <br />
                                 <span className="badge badge-ghost badge-sm">{shoe.color}</span>
                             </td>
-                            <td>{shoe.sellingDetails.sold ? <span className="badge badge-warning badge-sm">Out of stock</span> : <span className="badge badge-success badge-sm">Available</span>}</td>
+                            <td>{shoe.productQuantity==0 ? <span className="badge badge-warning badge-sm">Out of stock</span> : <span className="badge badge-success badge-sm">Available</span>}</td>
 
                             <td>{shoe.sellerInfo.sellerName}</td>
                             <th>
                                 
-                                <button className="btn btn-secondary btn-xs">Sell</button>
-                                <button onClick={()=>dispatch(shoeAdd(shoe))} className="btn btn-warning btn-xs"><Link to="/dashboard/UpdateProduct">Update</Link></button>
+                                <button onClick={()=>dispatch(shoeAdd(shoe))} disabled={shoe.productQuantity==0} className="btn btn-secondary btn-xs"><Link to="/dashboard/sellProduct">Sell Product</Link></button>
+                                <button onClick={()=>dispatch(shoeAdd(shoe))} className="btn btn-warning btn-xs"><Link to="/dashboard/UpdateProduct">{shoe.productQuantity>0?<p>Update</p>:<p>Restock</p>}</Link></button>
                             </th>
                         </tr>)
                     }
@@ -154,6 +144,20 @@ const MyProducts = () => {
 
 
             </table>
+            <ToastContainer></ToastContainer>
+            <input type="checkbox" id="my_modal_1" className="modal-toggle" />
+            <div className="modal" role="dialog">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Delete products</h3>
+                    <p className="py-4">Are you sure to delete the Items?</p>
+                    <div className="modal-action flex">
+                        
+                    <label htmlFor="my_modal_1" onClick={handleDelete} className="btn  bg-red-800 text-white">Yes I want to delete</label>
+                        <label htmlFor="my_modal_1" className="btn">No I don't</label>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
     );
 };

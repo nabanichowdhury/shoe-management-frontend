@@ -5,12 +5,13 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useUpdateProductMutation } from "../redux/features/products/productApi";
+import { useNavigate } from "react-router-dom";
 
 const UpdateProduct = () => {
     const {_id,name,email}=useAppSelector(state=>state.user) 
     const [updateProduct,others]=useUpdateProductMutation()
     const shoeDetail=useAppSelector(state=>state.shoe)
-    const dispatch=useAppDispatch();
+    const navigate=useNavigate()
     const [shoe, setShoe] = useState<IShoe>({
         name: shoeDetail.name,
         productQuantity: shoeDetail.productQuantity,
@@ -39,59 +40,18 @@ const UpdateProduct = () => {
         console.log(shoe)
         const id=shoeDetail._id
 
-        updateProduct({id,shoe})
+        updateProduct({id,shoe}).unwrap().then((res)=>{
+            if(res.success){
+                toast.success(res.message)
+                navigate('/dashboard/myProducts')
+            }else{
+                toast.error(res.message)
+            }
+        })
         
-        // if(isLoading){
-        //     toast.success('Product is being posted', {
-        //         position: 'bottom-right',
-        //         autoClose: 3000, // Set the duration for the toast to be visible
-        //         hideProgressBar: false,
-        //       closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //       });
-            
-        // }
-        // if(isSuccess){
-        //     toast.success('Product posted successfully', {
-        //         position: 'bottom-right',
-        //         autoClose: 3000, // Set the duration for the toast to be visible
-        //         hideProgressBar: false,
-        //       closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //       });
-
-        // }
-        // if(isError){
-        //     toast.error('Error posting product', {
-        //         position: 'bottom-right',
-        //         autoClose: 3000,
-        //         hideProgressBar: false,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //       });
-        // }
         
-          setShoe({
-            name: '',
-            productQuantity: 0,
-            productPrice: 0,
-            brand: '',
-            size: '',
-            color: '',
-            releaseDate: '',
-            model: '',
-            sellerInfo: {
-              sellerName: '',
-              sellerId: '',
-            },
-            sellingDetails: {
-              sold: false,
-              buyerId: null,
-            },
-          });  
+        
+          
       };
     return (
         <div >

@@ -13,7 +13,7 @@ interface IShoe {
     };
     sellingDetails: {
       sold: boolean;
-      buyerId: string | null;
+      buyerId: string[] | null;
     };
   }
   

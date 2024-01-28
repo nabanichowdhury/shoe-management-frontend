@@ -48,7 +48,7 @@ const AllProducts = () => {
               <br/>
               <span className="badge badge-ghost badge-sm">{shoe.color}</span>
             </td>
-            <td>{shoe.sellingDetails.sold ?<span className="badge badge-warning badge-sm">Out of stock</span>:<span className="badge badge-success badge-sm">Available</span>}</td>
+            <td>{shoe.productQuantity==0 ?<span className="badge badge-warning badge-sm">Out of stock</span>:<span className="badge badge-success badge-sm">Available</span>}</td>
             
             <td>{shoe.sellerInfo.sellerName}</td>
             <th>

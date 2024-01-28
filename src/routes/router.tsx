@@ -14,6 +14,7 @@ import MySoldProducts from "../pages/MySoldProducts";
 import UpdateProduct from "../pages/UpdateProduct";
 import SellProduct from "../pages/SellProduct";
 import SalesReport from "../pages/SalesReport";
+import FilterProduct from "../pages/FilterProduct";
 
 export const routes = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ export const routes = createBrowserRouter([
       {
         path: '/dashboard/salesReport',  // Combine parent and child route paths
         element: <SalesReport></SalesReport>
+      },
+      {
+        path: '/dashboard/filterProduct',  // Combine parent and child route paths
+        element: <FilterProduct></FilterProduct>
       },
     ]
   },

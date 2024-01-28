@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import CheckBox from "../components/CheckBox";
 import { useDeleteProductsMutation } from "../redux/features/products/productApi";
 import { ToastContainer, toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { shoeAdd } from "../redux/features/products/productSlice";
 
 
@@ -15,6 +15,7 @@ const MyProducts = () => {
     const [isCheck, setIsCheck] = useState<string[]>([]);
     const [list, setList] = useState<any[]>([]);
     const dispatch=useAppDispatch()
+    const navigate=useNavigate();
     
     const user = useAppSelector(state => state.user)
     const id = user._id;
@@ -53,8 +54,10 @@ const MyProducts = () => {
         deleteProducts(isCheck).unwrap().then((res)=>{
             
                 toast.success(res.message);
+                navigate('/dashboard/myProducts')
             
         })
+       
         
 
     }

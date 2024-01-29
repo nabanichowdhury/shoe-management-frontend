@@ -12,7 +12,7 @@ const Login = () => {
     const [loginUser]=useLoginUserMutation()
     const navigate=useNavigate()
     const dispatch=useAppDispatch()
-    const [error,setError]=useState('')
+    // const [error,setError]=useState('')
     const [password,setPassword]=useState('');
     const [email,setEmail]=useState('');
     const handleEmailChange = (event:ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ const Login = () => {
           password:password
         }
        loginUser(data).unwrap().then((result:any)=>{
-        console.log(result.user)
+        
         localStorage.setItem('token',result.token) 
         if (result.user.email) {
             console.log('Redirecting to dashboard');
@@ -41,8 +41,8 @@ const Login = () => {
           }
 
        }).catch((error: any) => {
-        
-        setError(error)
+        console.log(error)
+        // setError(error)
       });
       }
     return (
@@ -71,9 +71,10 @@ const Login = () => {
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                     <span className="label-text-alt">Donot have a Account? <Link to='/signUp' className="font-bold">Signup</Link></span>
                                 </label>
-                                <label>
-                                <span className="text-red-800">{error}</span>
-                                </label>
+                                {/* <label className="text-red-800">
+                                {error}
+                                <span ></span>
+                                </label> */}
                                  
                             </div>
                             <div className="form-control mt-6">

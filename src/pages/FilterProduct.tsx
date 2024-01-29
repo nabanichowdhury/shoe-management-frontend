@@ -105,7 +105,7 @@ const FilterProduct = () => {
       />
 
       <div>
-        <h1 className="font-bold mx-3">My Buyers</h1>
+        
         <div className="overflow-x-auto">
           <table className="table table-xs">
             <thead>

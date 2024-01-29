@@ -35,6 +35,8 @@ const SignUp = () => {
       })
       .catch((error) => {
         setError(error.data.error);
+        navigate(`/login`);
+
     
       });
 

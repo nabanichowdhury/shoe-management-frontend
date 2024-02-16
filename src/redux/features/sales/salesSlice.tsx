@@ -34,21 +34,21 @@ const salesSlice = createSlice({
       },
       filterByYear: (state, action) => {
         const { year } = action.payload;
-        console.log(year)
+       
         state.filteredSales = state.sales.filter(
             (sale) => sale.dateOfSale.split('/')[2] == year
         );
-        console.log(state.filteredSales)
+        
     },
       filterByMonth: (state, action) => {
         const { year, month } = action.payload;
-        console.log(year,month)
+        
         state.filteredSales = state.sales.filter(
           (sale) =>
             sale.dateOfSale.split('/')[2] == year &&
             sale.dateOfSale.split('/')[1] == month
         );
-        console.log(state.filteredSales)
+        
       },
       filterByWeek: (state) => {
        
@@ -64,8 +64,7 @@ const salesSlice = createSlice({
 
         const startDate = startOfWeek(reference, { weekStartsOn: 1 });
         const endDate = endOfWeek(reference, { weekStartsOn: 1 });
-        console.log(startDate)
-        console.log(endDate)
+        
   
         state.filteredSales = state.sales.filter((sale) => {
           const saleDate = parse(sale.dateOfSale, 'dd/MM/yyyy', new Date());
@@ -74,7 +73,7 @@ const salesSlice = createSlice({
   
           return isWithin;
         });
-        console.log(state.filteredSales)
+        
     },
     filterByDate: (state, action) => {
         const { date } = action.payload;
